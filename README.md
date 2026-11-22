@@ -75,4 +75,4 @@ Python · pandas · SQLAlchemy · SQL Server (`MERGE`) · SQLite · pytest
 
 ## 👤 Autor
 
-**Newton Giovanni** · Economista e Analista de Dados Estratégicos · [LinkedIn](https://www.linkedin.com/in/newton-giovanni/)
+**Newton Giovanni** · Economista e Analista de Dados Estratégicos · [LinkedIn](https://www.linkedin.com/in/newton-giovanni/) · [Portfólio](https://github.com/newgiovanni0833)
