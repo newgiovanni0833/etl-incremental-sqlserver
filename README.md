@@ -1,14 +1,14 @@
-# 🗄️ ETL incremental em Python: CSV → staging → MERGE
+# ETL incremental em Python: CSV → staging → MERGE
 
 Carga incremental e idempotente de arquivos grandes em banco relacional, com leitura em blocos, tabela de staging, `MERGE` e checkpoint.
 
-> ⚠️ **Dados fictícios.** O CSV de agenda de instrutores é gerado por script. A arquitetura é a que uso em repositórios de dados institucionais em SQL Server.
+> **Dados fictícios.** O CSV de agenda de instrutores é gerado por script. A arquitetura é a que uso em repositórios de dados institucionais em SQL Server.
 
-## 🎯 Problema de negócio
+## Problema de negócio
 
 Um sistema operacional exporta diariamente um CSV que só cresce. Carregá-lo inteiro a cada execução é lento, estoura a memória e, se algo falhar no meio, deixa o banco em estado incerto. O objetivo é carregar **apenas o que é novo**, poder **reexecutar sem duplicar** e **retomar do ponto em que parou**.
 
-## 🏗️ Arquitetura
+## Arquitetura
 
 ```mermaid
 flowchart LR
@@ -28,7 +28,7 @@ flowchart LR
 | Conversão para tipos nativos do Python | Drivers ODBC rejeitam tipos do numpy/pandas |
 | Credenciais em variável de ambiente | Nenhum segredo no código ou no repositório |
 
-## ▶️ Como executar
+## Como executar
 
 ```bash
 pip install -r requirements.txt
@@ -46,7 +46,7 @@ python src/etl_incremental.py dados/agenda.csv
 
 Para apontar para SQL Server, copie `.env.example` para `.env` e preencha `ETL_DB_URL`.
 
-## 📊 Resultado da demonstração
+## Resultado da demonstração
 
 | Execução | Linhas lidas | Carregadas | Rejeitadas (sem chave) | Tempo |
 |---|---:|---:|---:|---:|
@@ -56,7 +56,7 @@ Para apontar para SQL Server, copie `.env.example` para `.env` e preencha `ETL_D
 
 Medido em SQLite local, com blocos de 50 mil linhas. Linhas com data inválida são carregadas com a data nula; linhas sem chave são rejeitadas e contadas.
 
-## ✅ Testes
+## Testes
 
 ```bash
 pytest -q
@@ -64,15 +64,15 @@ pytest -q
 
 Os testes cobrem carga inicial, reexecução, carga incremental, reprocessamento do zero (idempotência), detecção de separador e a geração da instrução `MERGE` do SQL Server.
 
-## ⚠️ Limites conhecidos
+## Limites conhecidos
 
 - O checkpoint por número de linha pressupõe um arquivo **somente de inclusão** (append-only). Para capturar alterações em linhas antigas, apague o checkpoint e reprocesse: o `MERGE` atualiza os registros sem duplicar.
 - A demonstração e os testes rodam em SQLite. O caminho do SQL Server usa a mesma lógica com a instrução `MERGE` e precisa do driver ODBC instalado.
 
-## 🛠️ Tecnologias
+## Tecnologias
 
 Python · pandas · SQLAlchemy · SQL Server (`MERGE`) · SQLite · pytest
 
-## 👤 Autor
+## Autor
 
 **Newton Giovanni** · Economista e Analista de Dados Estratégicos · [LinkedIn](https://www.linkedin.com/in/newton-giovanni/) · [Portfólio](https://github.com/newgiovanni0833)
